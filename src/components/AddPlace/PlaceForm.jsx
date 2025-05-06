@@ -5,12 +5,21 @@ export default function PlaceForm({ setPlaces }) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false)
+  const [images, setImages] = useState([])
+  const [previews, setPreviews] = useState([])
   const navigate = useNavigate()
+
+  const handleImagesChange = e => {
+    const files = Array.from(e.target.files)
+    setImages(files)
+
+    const previewUrls = files.map(file => URL.createObjectURL(file))
+    setPreviews(previewUrls)
+  }
 
   const handleSubmit = async e => {
     e.preventDefault()
     if (!name.trim()) return alert('Wpisz nazwę miejsca')
-
     setLoading(true)
 
     try {
@@ -37,14 +46,17 @@ export default function PlaceForm({ setPlaces }) {
         name,
         description,
         position: coords,
+        images, // tu masz dostęp do wszystkich zdjęć
       }
 
-      setPlaces(prevPlaces => [...prevPlaces, newPlace])
+      setPlaces(prev => [...prev, newPlace])
       setName('')
       setDescription('')
+      setImages([])
+      setPreviews([])
       navigate('/my-places')
-    } catch (error) {
-      alert('Wystąpił błąd przy pobieraniu danych')
+    } catch (err) {
+      alert('Błąd podczas pobierania lokalizacji')
     } finally {
       setLoading(false)
     }
@@ -54,8 +66,6 @@ export default function PlaceForm({ setPlaces }) {
     <form onSubmit={handleSubmit}>
       <input
         type='text'
-        name='placeName'
-        id='placeName'
         placeholder='Nazwa miejsca'
         value={name}
         onChange={e => setName(e.target.value)}
@@ -63,13 +73,27 @@ export default function PlaceForm({ setPlaces }) {
       />
       <input
         type='text'
-        name='placeDescription'
-        id='placeDescription'
         placeholder='Opis'
         value={description}
         onChange={e => setDescription(e.target.value)}
         required
       />
+      <input
+        type='file'
+        accept='image/*'
+        multiple
+        onChange={handleImagesChange}
+      />
+      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+        {previews.map((src, idx) => (
+          <img
+            key={idx}
+            src={src}
+            alt={`Podgląd ${idx + 1}`}
+            style={{ width: '120px', height: 'auto' }}
+          />
+        ))}
+      </div>
       <button
         type='submit'
         disabled={loading}
