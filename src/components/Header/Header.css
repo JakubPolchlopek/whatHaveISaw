@@ -1,0 +1,27 @@
+header {
+  height: 7vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-weight: 600;
+}
+
+header nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  align-items: center;
+  width: 50%;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+  padding: 0.3rem 0.7rem;
+}
+
+.active {
+  font-weight: bold;
+  background-color: pink;
+  border-radius: 2rem;
+}
