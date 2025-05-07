@@ -2,7 +2,7 @@ import 'leaflet/dist/leaflet.css'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { useNavigate } from 'react-router-dom'
 
-export default function PlacesMap({ places }) {
+export default function PlacesMap({ places, mapHeight, mapWidth }) {
   const navigate = useNavigate()
 
   return (
@@ -10,7 +10,11 @@ export default function PlacesMap({ places }) {
       center={[51.505, -0.09]}
       zoom={5}
       scrollWheelZoom={false}
-      style={{ height: '50vh', width: '100%' }}
+      style={{
+        height: mapHeight || '25vw',
+        width: mapWidth || '80vw',
+        borderRadius: '2rem',
+      }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
