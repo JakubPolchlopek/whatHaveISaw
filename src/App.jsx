@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import './App.css'
-import AddPlace from './Components/AddPlace/AddPlace'
-import Header from './components/Header/Header'
-import Home from './Components/Home/Home'
-import MyPlaces from './Components/MyPlaces/MyPlaces'
-import SinglePlace from './components/SinglePlace/SinglePlace'
+import Header from './components/layout/Header/Header'
+import AddPlace from './components/pages/AddPlace/AddPlace'
+import Home from './components/pages/Home/Home'
+import MyPlaces from './components/pages/MyPlaces/MyPlaces'
+import SinglePlace from './components/pages/SinglePlace/SinglePlace'
 
 function App() {
   const [places, setPlaces] = useState([])
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<Home />}
+          element={<Home places={places} />}
         />
         <Route
           path='/my-places'
